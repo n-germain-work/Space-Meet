@@ -4,7 +4,7 @@ import React from 'react';
 import marker from '../img/marker.png';
 import profil from '../img/profil.png';
 import buttonEdit from '../img/edit.png';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function ProfilUser() {
   const pseudo = localStorage.getItem('pseudo');
@@ -12,6 +12,13 @@ function ProfilUser() {
   const photoOK = localStorage.getItem('picture');
   const about = localStorage.getItem('about');
   const quote = localStorage.getItem('quote');
+
+  const historyPush = useHistory();
+
+  const handleReset = () => {
+    localStorage.clear();
+    historyPush.push('/');
+  };
 
   return (
     <div className='profil-masseffect'>
@@ -38,6 +45,9 @@ function ProfilUser() {
         <p>{about}</p>
         <h3>Favourite quote</h3>
         <p style={{ fontStyle: 'italic' }}>" {quote} "</p>
+        <button type='button' onClick={() => handleReset()}>
+          Reset application
+        </button>
       </div>
     </div>
   );

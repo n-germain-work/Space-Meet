@@ -20,7 +20,6 @@ function MatchItem(props) {
     for (let i = 0; i < characters.length; i++) {
       if (characters[i].characterId === props.id) {
         props.setCurrentPnj(characters[i]);
-        console.log(characters[i]);
       }
     }
   }

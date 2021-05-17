@@ -17,23 +17,33 @@ const randomMessage = () =>
 
 function MatchChat({ currentPnj }) {
   const [msgs, setMsgs] = useState(JSON.parse(localStorage.getItem('chat')));
-  /*const [userMsgs, setUserMsgs] = useState([]);
-  const [pnjMsgs, setPnjMsgs] = useState([]);*/
+
   const [userInput, setuserInput] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setuserInput('');
-
-    let temp = [
-      ...msgs,
-      {
-        charId: currentPnj.characterId,
-        id: msgs.length,
-        from: 'user',
-        msg: userInput,
-      },
-    ];
+    let temp = [];
+    if (msgs === null) {
+      temp = [
+        {
+          charId: currentPnj.characterId,
+          id: 0,
+          from: 'user',
+          msg: userInput,
+        },
+      ];
+    } else {
+      temp = [
+        ...msgs,
+        {
+          charId: currentPnj.characterId,
+          id: msgs.length,
+          from: 'user',
+          msg: userInput,
+        },
+      ];
+    }
 
     setMsgs(temp);
 
@@ -50,30 +60,30 @@ function MatchChat({ currentPnj }) {
       setMsgs(temp);
       localStorage.setItem('chat', JSON.stringify(temp));
     }, 2000);
-
-    /*setUserMsgs([...userMsgs, userInput]);
-    setPnjMsgs([...pnjMsgs, randomMessage()]);*/
   };
 
   return (
     <>
       <div className='match-chat'>
-        {currentPnj.characterId ? (
+        {currentPnj.name ? (
           <div>
             {`Chat with ${currentPnj.name}`}
             <ul className='messages'>
-              {msgs
-                .filter((message) => message.charId === currentPnj.characterId)
-                .map((message, index) => (
-                  <li
-                    key={index}
-                    className={
-                      message.from === 'pnj' ? 'message-pnj' : 'message-user'
-                    }
-                  >
-                    {message.msg}
-                  </li>
-                ))}
+              {msgs !== null &&
+                msgs
+                  .filter(
+                    (message) => message.charId === currentPnj.characterId
+                  )
+                  .map((message, index) => (
+                    <li
+                      key={index}
+                      className={
+                        message.from === 'pnj' ? 'message-pnj' : 'message-user'
+                      }
+                    >
+                      {message.msg}
+                    </li>
+                  ))}
             </ul>
           </div>
         ) : (
