@@ -15,6 +15,17 @@ function Chat({ setCurrentPnj, currentPnj }) {
         (character) => character.like === 1 && character.isRomanceable === true
       )
     );
+    setCurrentPnj({
+      id: '',
+      name: '',
+      planet: '',
+      race: '',
+      age: '',
+      gender: '',
+      quote: '',
+      description: '',
+      img: '',
+    });
     // eslint-disable-next-line
   }, []);
 
